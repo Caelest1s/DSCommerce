@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,83 +16,34 @@ import jakarta.persistence.Table;
 @Table(name = "tb_user")
 public class User {
 
-    //Atributes
+    // Atributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    //Não deixa repetir a nível de BD
+    @Column(unique = true)
     private String email;
     private String phone;
     private LocalDate birthDate;
     private String password;
-    //private String[] roles;
+    // private String[] roles;
 
+    // O atributo na classe Order @ManyToOne é 'client' (User)
     @OneToMany(mappedBy = "client")
     private List<Order> orders = new ArrayList<>();
 
-    //Getters and Setters
-    public Long getId() {
-        return id;
-    }
+    /*
+     * public String[] getRoles() {
+     * return roles;
+     * }
+     * 
+     * public void setRoles(String[] roles) {
+     * this.roles = roles;
+     * }
+     */
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-    
-    public String getName() {
-        return name;
-    }
-    
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public String getEmail() {
-        return email;
-    }
-    
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
-    public String getPhone() {
-        return phone;
-    }
-    
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-    
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-    
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-    /* 
-    public String[] getRoles() {
-        return roles;
-    }
-    
-    public void setRoles(String[] roles) {
-        this.roles = roles;
-    }
-    */
-
-    //Constructor
+    // Constructor
     public User() {
     }
 
@@ -104,7 +56,7 @@ public class User {
         this.password = password;
     }
 
-    //ToString
+    // ToString
     @Override
     public String toString() {
         return "User [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + ", birthDate="
@@ -165,5 +117,58 @@ public class User {
             return false;
         return true;
     }
-    
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
 }
