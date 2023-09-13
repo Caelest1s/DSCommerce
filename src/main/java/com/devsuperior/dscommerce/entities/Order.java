@@ -1,6 +1,9 @@
 package com.devsuperior.dscommerce.entities;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -17,13 +20,16 @@ public class Order {
     private Instant moment;
     private OrderStatus status;
 
-    // cria um campo no bd com este campo 'client_id'
+    // @JoinColumn cria um campo no BD com o campo 'client_id'
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
 
     // Constructor
     public Order() {
@@ -77,4 +83,15 @@ public class Order {
         this.payment = payment;
     }
 
+    public Set<OrderItem> getItems() {
+        return items;
+    }
+
+    /**
+     * busca todos os product de ordemItem
+     * 
+     */
+    public List<Product> getProducts() {
+        return items.stream().map(x -> x.getProduct()).toList();
+    }
 }
