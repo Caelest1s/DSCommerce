@@ -47,6 +47,10 @@ public class Product {
         this.name = name;
         this.description = description;
         this.price = price;
+        /**
+         * por padrão o BD faz o cammelcase ficar assim img_url
+         * não sendo o nome imgUrl como está a var
+         */
         this.imgUrl = imgUrl;
     }
 
