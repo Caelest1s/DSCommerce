@@ -20,6 +20,7 @@ public class Category {
     private Long id;
     private String name;
 
+    // relationship product
     @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 

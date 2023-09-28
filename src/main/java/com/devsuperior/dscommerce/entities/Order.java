@@ -20,14 +20,17 @@ public class Order {
     private Instant moment;
     private OrderStatus status;
 
+    // relationship user
     // @JoinColumn cria um campo no BD com o campo 'client_id'
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
 
+    // relacionamento com pagamento
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
 
+    // relacionamento com OrderItem (classe relacionada por chave primária composta)
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
 

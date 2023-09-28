@@ -116,6 +116,7 @@ public class User {
         return orders;
     }
 
+    // method hash and toString
     @Override
     public int hashCode() {
         final int prime = 31;
