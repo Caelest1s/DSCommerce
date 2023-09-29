@@ -1,6 +1,10 @@
 package com.devsuperior.dscommerce.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.devsuperior.dscommerce.dto.ProductDTO;
 import com.devsuperior.dscommerce.services.ProductService;
 
-// Configura o que a app roda ela estará respondendo pela WEB
+// Configura o que a aplicação executa, ela estará respondendo pela WEB
 @RestController
 @RequestMapping(value = "/products")
 public class ProductController {
@@ -17,11 +21,19 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
+    /**
+     * O @getMapping value id encontra por numero no navegador juntamente com
+     * o @PathVariable
+     */
     @GetMapping(value = "/{id}")
     public ProductDTO findById(@PathVariable Long id) {
 
         ProductDTO dto = service.findById(id);
         return dto;
-        // return "Ola mundo!";
+    }
+
+    @GetMapping
+    public Page<ProductDTO> findAll(Pageable pageable) {
+        return service.findAll(pageable);
     }
 }
