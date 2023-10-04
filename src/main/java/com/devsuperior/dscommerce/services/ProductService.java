@@ -30,25 +30,21 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id) {
-        
+
         Optional<Product> result = repository.findById(id);
         Product product = result.get();
 
-        ProductDTO dto = new ProductDTO();
-        dto.setId(product.getId());
-        dto.setName(product.getName());
-        dto.setDescription(product.getDescription());
-        dto.setPrice(product.getPrice());
-        dto.setImgUrl(product.getImgUrl());
-
-        /*
-         * Resumo do método acima:
-         * 
+        ProductDTO dto = new ProductDTO(product);
+        /**
          * ProductDTO dto = new ProductDTO(product);
-         * foi feito uma sobrecarga do construtor (product)
          * 
-         * Product product = repository.findById(id).get();
-         * return new ProductDTO(product);
+         * dto.setId(product.getId());
+         * dto.setName(product.getName());
+         * dto.setDescription(product.getDescription());
+         * dto.setPrice(product.getPrice());
+         * dto.setImgUrl(product.getImgUrl());
+         * 
+         * Resumo do método acima:
          */
         return dto;
     }
@@ -74,6 +70,7 @@ public class ProductService {
     @Transactional
     public ProductDTO update(Long id, ProductDTO dto) {
 
+        //'getReferencedById' não vai no banco só prepara o OBJ, monitorado pelo JPA
         Product entity = repository.getReferenceById(id);
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
@@ -81,12 +78,19 @@ public class ProductService {
         return new ProductDTO(entity);
     }
 
+    //replicou 2x já é o suficiente para criar um método
     private void copyDtoToEntity(ProductDTO dto, Product entity) {
 
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());
         entity.setPrice(dto.getPrice());
         entity.setImgUrl(dto.getImgUrl());
+    }
+
+    @Transactional
+    public void delete(Long id) {
+
+        repository.deleteById(id);
     }
 
 }
