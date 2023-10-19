@@ -43,7 +43,6 @@ public class ProductService {
         ProductDTO dto = new ProductDTO(result);
         /**
          * ProductDTO dto = new ProductDTO(product);
-         * 
          * dto.setId(product.getId());
          * dto.setName(product.getName());
          * dto.setDescription(product.getDescription());
@@ -81,7 +80,6 @@ public class ProductService {
             Product entity = repository.getReferenceById(id);
             copyDtoToEntity(dto, entity);
             entity = repository.save(entity);
-    
             return new ProductDTO(entity);
         } 
         catch (EntityNotFoundException e) {
@@ -99,7 +97,6 @@ public class ProductService {
 
         try {
             repository.deleteById(id);
-
         } 
         catch (DataIntegrityViolationException e) {
             throw new DatabaseException("Falha de integridade referencial");
