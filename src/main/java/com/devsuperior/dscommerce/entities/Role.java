@@ -1,40 +1,31 @@
 package com.devsuperior.dscommerce.entities;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_category")
-public class Category {
+@Table(name = "tb_role")
+public class Role implements GrantedAuthority{
 
-    // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String authority;
 
-    // relationship product
-    @ManyToMany(mappedBy = "categories")
-    private Set<Product> products = new HashSet<>();
-
-    // Contructor
-    public Category() {
+    public Role() {
 
     }
 
-    public Category(Long id, String name) {
+    public Role(Long id, String authority) {
         this.id = id;
-        this.name = name;
+        this.authority = authority;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -43,23 +34,20 @@ public class Category {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    //@Override
+    public String getAuthority() {
+        return authority;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((authority == null) ? 0 : authority.hashCode());
         return result;
     }
 
@@ -71,11 +59,11 @@ public class Category {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Category other = (Category) obj;
-        if (id == null) {
-            if (other.id != null)
+        Role other = (Role) obj;
+        if (authority == null) {
+            if (other.authority != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!authority.equals(other.authority))
             return false;
         return true;
     }

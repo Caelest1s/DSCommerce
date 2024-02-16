@@ -4,26 +4,21 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "tb_order_item")
 public class OrderItem {
 
-    // Attributes
     @EmbeddedId
     private OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
     private Double price;
 
-    // Constructor
     public OrderItem() {
-
     }
 
-    /**
-     * dentro da classe 'OrderItemPK' temos como atributos as classes Order e Product.
-     * id é como ele chamou a classe OrderItemPK (linha 13)
-     */
     public OrderItem(Order order, Product product, Integer quantity, Double price) {
         id.setOrder(order);
         id.setProduct(product);
@@ -31,12 +26,6 @@ public class OrderItem {
         this.price = price;
     }
 
-    public OrderItem(Integer quantity, Double price) {
-        this.quantity = quantity;
-        this.price = price;
-    }
-
-    // Getters and Setters
     public Order getOrder() {
         return id.getOrder();
     }
@@ -69,4 +58,18 @@ public class OrderItem {
         this.price = price;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrderItem orderItem = (OrderItem) o;
+
+        return Objects.equals(id, orderItem.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

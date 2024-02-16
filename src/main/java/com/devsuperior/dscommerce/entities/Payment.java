@@ -1,21 +1,13 @@
 package com.devsuperior.dscommerce.entities;
 
-import java.time.Instant;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import java.time.Instant;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tb_payment")
 public class Payment {
-
-    // Attributes
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +20,7 @@ public class Payment {
     @MapsId
     private Order order;
 
-    // Constructor
     public Payment() {
-
     }
 
     public Payment(Long id, Instant moment, Order order) {
@@ -39,7 +29,6 @@ public class Payment {
         this.order = order;
     }
 
-    // Getters asd Setters
     public Long getId() {
         return id;
     }
@@ -56,29 +45,26 @@ public class Payment {
         this.moment = moment;
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Payment payment = (Payment) o;
+
+        return Objects.equals(id, payment.id);
+    }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Payment other = (Payment) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
-    }
-
 }

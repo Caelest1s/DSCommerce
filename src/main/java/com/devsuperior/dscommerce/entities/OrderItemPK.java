@@ -4,18 +4,11 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+import java.util.Objects;
+
 @Embeddable
 public class OrderItemPK {
 
-    /**
-     * A anotação ManyToOne é utilizada pois diferente de como está no diagrama
-     * (ORM)
-     * na programação é esta classe que irá associar as duas classes (Order &
-     * Product)
-     * podendo ter muitos para uma order e muitos para um product.
-     */
-
-    // Attributes
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
@@ -24,12 +17,9 @@ public class OrderItemPK {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    // Constructor
     public OrderItemPK() {
-
     }
 
-    // Attributes
     public Order getOrder() {
         return order;
     }
@@ -47,35 +37,20 @@ public class OrderItemPK {
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((order == null) ? 0 : order.hashCode());
-        result = prime * result + ((product == null) ? 0 : product.hashCode());
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        OrderItemPK that = (OrderItemPK) o;
+
+        if (!Objects.equals(order, that.order)) return false;
+        return Objects.equals(product, that.product);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        OrderItemPK other = (OrderItemPK) obj;
-        if (order == null) {
-            if (other.order != null)
-                return false;
-        } else if (!order.equals(other.order))
-            return false;
-        if (product == null) {
-            if (other.product != null)
-                return false;
-        } else if (!product.equals(other.product))
-            return false;
-        return true;
+    public int hashCode() {
+        int result = order != null ? order.hashCode() : 0;
+        result = 31 * result + (product != null ? product.hashCode() : 0);
+        return result;
     }
-
-    
 }

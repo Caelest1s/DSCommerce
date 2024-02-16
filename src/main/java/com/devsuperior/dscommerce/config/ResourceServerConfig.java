@@ -22,13 +22,10 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-// @CONFIGURATION defini componentes na forma de metódos
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class ResourceServerConfig {
-
-	// CORS -> recurso que os navegadores tem que por padrão eles não permitem que o backend acesse um recurso por um HOST que não esteja autorizado
 
 	@Value("${cors.origins}")
 	private String corsOrigins;
@@ -46,13 +43,10 @@ public class ResourceServerConfig {
 	@Bean
 	@Order(3)
 	public SecurityFilterChain rsSecurityFilterChain(HttpSecurity http) throws Exception {
-// DESABILITA a proteção contra csrf que é um ataque quando grava dados na seção. Gera vulnerabilidade para acessar as informações de forma indevida
-// API REST não guarda state em seção, então não precisa preocupar com isto
+
 		http.csrf(csrf -> csrf.disable());
-// CONFIGURA as permissões para os meus endpoints, para as minhas requisições, neste caso está tudo permitido, config GLOBAL. O controle fará no nível de rota
 		http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
 		http.oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer.jwt(Customizer.withDefaults()));
-		// faz a liberação do CORS somente para os HOST autorizados
 		http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 		return http.build();
 	}
@@ -68,7 +62,6 @@ public class ResourceServerConfig {
 		return jwtAuthenticationConverter;
 	}
 
-	// Esses dois Beans (corsConfigurationSource, corsFilter) responsável por toda configuração do CORS
 	@Bean
 	CorsConfigurationSource corsConfigurationSource() {
 

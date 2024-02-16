@@ -1,17 +1,18 @@
 package com.devsuperior.dscommerce.entities;
 
+import jakarta.persistence.*;
+
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
-import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_order")
 public class Order {
 
-    // Attributes
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,32 +21,27 @@ public class Order {
     private Instant moment;
     private OrderStatus status;
 
-    // relationship user
-    // @JoinColumn cria um campo no BD com o campo 'client_id'
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
 
-    // relacionamento com pagamento
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Payment payment;
 
-    // relacionamento com OrderItem (classe relacionada por chave primária composta)
     @OneToMany(mappedBy = "id.order")
     private Set<OrderItem> items = new HashSet<>();
 
-    // Constructor
     public Order() {
     }
 
-    public Order(Long id, Instant moment, OrderStatus status, User client) {
+    public Order(Long id, Instant moment, OrderStatus status, User client, Payment payment) {
         this.id = id;
         this.moment = moment;
         this.status = status;
         this.client = client;
+        this.payment = payment;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -90,39 +86,22 @@ public class Order {
         return items;
     }
 
-    /**
-     * busca todos os product de ordemItem
-     * 
-     */
     public List<Product> getProducts() {
         return items.stream().map(x -> x.getProduct()).toList();
     }
 
-    // HashCode
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+
+        return Objects.equals(id, order.id);
+    }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
-        return result;
+        return id != null ? id.hashCode() : 0;
     }
-
-    // Compare Equals
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Order other = (Order) obj;
-        if (id == null) {
-            if (other.id != null)
-                return false;
-        } else if (!id.equals(other.id))
-            return false;
-        return true;
-    }
-
 }

@@ -1,18 +1,15 @@
 package com.devsuperior.dscommerce.dto;
 
-public class FieldMessage {
+public class FieldMessageDTO {
 
-    // attributes
     private String fieldName;
     private String message;
 
-    // constructor
-    public FieldMessage(String fieldName, String message) {
+    public FieldMessageDTO(String fieldName, String message) {
         this.fieldName = fieldName;
         this.message = message;
     }
 
-    // getter
     public String getFieldName() {
         return fieldName;
     }
@@ -20,5 +17,4 @@ public class FieldMessage {
     public String getMessage() {
         return message;
     }
-
 }
