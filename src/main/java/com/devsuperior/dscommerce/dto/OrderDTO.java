@@ -4,11 +4,11 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotEmpty;
+
 import com.devsuperior.dscommerce.entities.Order;
 import com.devsuperior.dscommerce.entities.OrderItem;
 import com.devsuperior.dscommerce.entities.OrderStatus;
-
-import jakarta.validation.constraints.NotEmpty;
 
 public class OrderDTO {
 
@@ -67,7 +67,7 @@ public class OrderDTO {
         return items;
     }
 
-    public Double getTotal(){
+    public Double getTotal() {
         double sum = 0.0;
         for (OrderItemDTO item : items) {
             sum += item.getSubTotal();

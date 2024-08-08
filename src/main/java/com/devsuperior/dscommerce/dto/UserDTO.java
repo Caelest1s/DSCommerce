@@ -15,7 +15,6 @@ public class UserDTO {
     private String email;
     private String phone;
     private LocalDate birthDate;
-
     private List<String> roles = new ArrayList<>();
 
     public UserDTO(User entity) {
@@ -24,8 +23,7 @@ public class UserDTO {
         email = entity.getEmail();
         phone = entity.getPhone();
         birthDate = entity.getBirthDate();
-        
-        for (GrantedAuthority role : entity.getRoles()) {
+        for (GrantedAuthority role : entity.getAuthorities()) {
             roles.add(role.getAuthority());
         }
     }
