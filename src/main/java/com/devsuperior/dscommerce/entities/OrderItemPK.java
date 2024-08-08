@@ -1,10 +1,10 @@
 package com.devsuperior.dscommerce.entities;
 
+import java.util.Objects;
+
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-
-import java.util.Objects;
 
 @Embeddable
 public class OrderItemPK {
@@ -37,20 +37,23 @@ public class OrderItemPK {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        OrderItemPK that = (OrderItemPK) o;
-
-        if (!Objects.equals(order, that.order)) return false;
-        return Objects.equals(product, that.product);
+    public int hashCode() {
+        return Objects.hash(order, product);
     }
 
     @Override
-    public int hashCode() {
-        int result = order != null ? order.hashCode() : 0;
-        result = 31 * result + (product != null ? product.hashCode() : 0);
-        return result;
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (obj.getClass() != getClass())
+            return false;
+
+        OrderItemPK other = (OrderItemPK) obj;
+
+        if (!Objects.equals(order, other.order))
+            return false;
+        return Objects.equals(product, other.product);
     }
 }
