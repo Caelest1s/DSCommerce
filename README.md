@@ -91,11 +91,12 @@ Excluir Produto -> admin
 - Global Variable
 
 ### Implantação em produção (hospedagem)
-Backend: 🚧 em construção 🚧
+Backend: 🚧 uploading... 🚧
 
 Frontend: Netlify 
 
-Futuramente disponibilizarei o projeto, completo, numa *cloud platform* para melhor visualização. Somente o frontend se encontra hospedado.
+Futuramente disponibilizarei o backend do projeto numa *cloud platform* para melhor visualização. 
+O frontend encontra-se hospedado no netlify. 
 Para ter acesso ao projeto 100% basta executar os passos descritos abaixo:
 
 ## Como executar o projeto 
@@ -114,10 +115,19 @@ cd DSCommerce-backend
 # executar o projeto
 mvnw spring-boot:run
 
-# acessar o link abaixo: 
-```
+# acessar o link: 
 https://evirtualstore.netlify.app/
+```
 
+```bash
+#Perfil Client
+email: maria@gmail.com
+pass: 123456
+
+#Perfil Admin
+email: alex@gmail.com
+pass: 123456
+```
 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/Caelest1s/DSCommerce-frontend-vite/blob/main/LICENSE) 
 
