@@ -32,7 +32,7 @@ O sistema conta com Login e Autenticação, onde é selecionado o tipo de perfil
 </div>
 
 ## Perfil Admin
-<img src="https://github.com/user-attachments/assets/477648c4-5116-43ff-abda-374f7dbd6a7e" width="100%" height="700" alt="novo produto"/>
+<img src="https://github.com/user-attachments/assets/ef8255d0-9edb-4c4f-a35d-7727f51bf907" width="100%" height="700" alt="novo produto"/>
 
 ## Layout 
 <div>
